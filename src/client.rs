@@ -12,9 +12,9 @@ pub struct SlackClient {
 }
 
 #[derive(Debug, Serialize)]
-struct PostMessage {
-    channel: String, // TODO &str?
-    text: String,
+struct PostMessage<'a> {
+    channel: String, // TODO &str? idk enough about lifetimes to make this work
+    text: &'a str,
 }
 
 impl SlackClient {
@@ -25,7 +25,7 @@ impl SlackClient {
     pub async fn slack_post(&self, msg: &str) -> Result<(), reqwest::Error> {
         let msg = PostMessage {
             channel: self.channel_id.clone(),
-            text: msg.into(),
+            text: msg,
         };
 
         let res : serde_json::Value = reqwest::Client::new()
