@@ -1,6 +1,6 @@
 use tonic::{Request, Response, Status};
 
-pub mod slackpb {
+mod slackpb {
         tonic::include_proto!("slack"); // proto package name
 }
 
@@ -8,16 +8,16 @@ use slackpb::slack_adaptor_server::{SlackAdaptor, SlackAdaptorServer};
 use slackpb::{PostMessageRequest,PostMessageResponse};
 
 #[derive(Debug, Default)]
-pub struct Slack {}
+pub struct SlackAdaptorService {}
 
-pub fn get_slack () -> SlackAdaptorServer<Slack> {
-    let slack = Slack::default();
+pub fn new_server () -> SlackAdaptorServer<SlackAdaptorService> {
+    let slack = SlackAdaptorService::default();
 
     SlackAdaptorServer::new(slack)
 }
 
 #[tonic::async_trait]
-impl SlackAdaptor for Slack {
+impl SlackAdaptor for SlackAdaptorService {
     async fn post_message(&self, req: Request<PostMessageRequest>) -> Result<Response<PostMessageResponse>, Status> {
         println!("Request: {:?}", req);
 
