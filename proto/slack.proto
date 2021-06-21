@@ -2,8 +2,7 @@ syntax = "proto3";
 package slack;
 
 message PostMessageRequest {
-  string channel = 1;
-  string message = 2;
+  string message = 1;
 }
 
 message PostMessageResponse { }

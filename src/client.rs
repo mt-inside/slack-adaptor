@@ -22,10 +22,10 @@ impl SlackClient {
         SlackClient {channel_id: channel_id}
     }
 
-    pub async fn slack_post(&self) -> Result<(), reqwest::Error> {
+    pub async fn slack_post(&self, msg: &str) -> Result<(), reqwest::Error> {
         let msg = PostMessage {
             channel: self.channel_id.clone(),
-            text: "Hello from gateway".into(),
+            text: msg.into(),
         };
 
         let res : serde_json::Value = reqwest::Client::new()
@@ -36,7 +36,7 @@ impl SlackClient {
             .await?
             .json()
             .await?;
-        println!("{:#?}", res);
+        //println!("{:#?}", res);
         if *res.get("ok").unwrap() != serde_json::json!(true) {
             panic!("post didn't work"); // TODO: how to return error from functino?
         }

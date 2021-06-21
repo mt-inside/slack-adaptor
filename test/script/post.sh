@@ -4,5 +4,5 @@ grpcurl \
     -proto slack.proto \
     -d '@' \
     [::1]:50051 slack.SlackAdaptor/PostMessage << EOF
-{"channel":"foo", "message":"bar"}
+{"message":"rofl"}
 EOF

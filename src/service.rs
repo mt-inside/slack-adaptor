@@ -28,9 +28,9 @@ impl SlackAdaptor for SlackAdaptorService {
         &self,
         req: Request<PostMessageRequest>,
     ) -> Result<Response<PostMessageResponse>, Status> {
-        println!("Request: {:?}", req);
+        //println!("Request: {:?}", req);
 
-        self.client.slack_post().await.expect("couldn't post");
+        self.client.slack_post(&req.into_inner().message).await.expect("couldn't post");
 
         let resp = slackpb::PostMessageResponse {};
 
